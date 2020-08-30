@@ -1,0 +1,67 @@
+<style>
+#g{width:400px;height:400px;border:1px solid #000}
+.a{position:absolute}
+.p{width:20px;height:20px;background:#666}
+.s{background:#000}
+.r{background:red}
+</style>
+<h1>QR Snake <i id="s"></i></h1>
+<div id="g" class="a"></div>
+<script>
+d=document
+m="innerHTML"
+g=d.getElementById`g`
+s=d.getElementById`s`
+w=400
+k=39
+d.onkeydown=e=>{
+c=e.keyCode
+if(c>36&&c<41)k=c
+}
+g.onclick=e=>{
+x=e.pageX-9
+y=e.pageY-65
+x>y?w-x>y?k=38:k=39:w-x>y?k=37:k=40
+}
+h=[[2,2],[1,2]]
+a=(l,n)=>{
+p=d.createElement`div`
+p.className=n
+p.style.left=l[0]*20
+p.style.top=l[1]*20
+g.appendChild(p)
+}
+r=e=>parseInt(Math.random()*20)
+b=e=>{
+o=[r(),r()]
+if(q(o))b()
+}
+q=t=>{
+for(u of h)if(u[0]==t[0]&&u[1]==t[1])return 1
+}
+f=e=>{
+j=[...h[0]];
+if(k==37)j[0]+=19
+if(k==38)j[1]+=19
+if(k==39)j[0]+=1
+if(k==40)j[1]+=1
+j=j.map(n=>n%20)
+if(j[0]==o[0]&&j[1]==o[1]){
+h.push(h[h.length-1])
+b()
+}
+if(q(j)){
+clearInterval(v)
+g[m]+="Game over"
+}else{
+g[m]=""
+h=h.map((b,i)=>h[i-1]||j)
+h.forEach(b=>a(b,"a p"))
+a(o,"a p r")
+a(j,"a p s")
+s[m]=h.length-2
+}
+}
+b()
+v=setInterval(f,300)
+</script>
